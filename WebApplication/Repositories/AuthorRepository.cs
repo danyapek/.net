@@ -6,11 +6,12 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication.Interfaces.Repos.Dapper;
 using WebApplication.Models;
 
 namespace WebApplication.Repositories
 {
-    public class AuthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
         string connectionString = "Server=DESKTOP-VFB4VGC;Database=master;User Id=danya;Password=;Trusted_Connection=True";
 
@@ -41,14 +42,14 @@ namespace WebApplication.Repositories
                 using (IDbConnection db = new SqlConnection(connectionString))
                 {
                     var parameters = new { id = id };
-                    string sql = "SelectAuthorById";
+                    string sql = "SelectAuhtorById";
 
                     author = db.Query<Author>(sql, parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError("GetCountry by id: {}, error: {}", id, e.Message);
+                _logger.LogError("GetAuthor by id: {}, error: {}", id, e.Message);
             }
             return author;
         }
@@ -71,7 +72,7 @@ namespace WebApplication.Repositories
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var parameters = new { name = author.Name, year = author.Year, country = author.Country };
+                var parameters = new { id = author.Id, name = author.Name, year = author.Year, country = author.Country };
 
                 string sql = "UpdateAuthorById";
                 db.Execute(sql, parameters, commandType: CommandType.StoredProcedure);

@@ -36,9 +36,9 @@ namespace WebApplication
 
             #region Dapper Repositories
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
             /*
             services.AddTransient<IBookRepository, BookRepository>();
-            services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
             */
             #endregion
